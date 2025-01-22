@@ -1,19 +1,26 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 function MainContent(props) {
 
     const [status, setStatus] = useState(true);
+    const trunggian = useRef(null);
 
-    // Thay đổi trạng thái
-    const isChangeStatus = () => {
-        setStatus(!status);
+    // Hàm đổi trạng thái cho nút 'Đổi trạng thái'
+    const editClick = () => {
+        setStatus(false);
+    }
+
+    // Hàm đổi trạng thái cho nút 'Lưu'
+    const saveClick = () => {
+        setStatus(true);
+        console.log(trunggian.current.value);
     }
 
     // Component nút
     const componentButton = () => {
         return (
             <div className="btn-group mb-3">
-                <div className="btn btn-info" onClick={() => isChangeStatus()}>Đổi trạng thái</div>
+                <div className="btn btn-info" onClick={() => editClick()}>Đổi trạng thái</div>
             </div>
         )
     }
@@ -22,8 +29,8 @@ function MainContent(props) {
     const componentInput = () => {
         return (
             <div className='mb-1'>
-                <input defaultValue={props.title} name='ten' type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
-                <div className='btn btn-success' onClick={() => isChangeStatus()}>Lưu</div>
+                <input ref={trunggian} defaultValue={props.title} name='ten' type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
+                <div className='btn btn-success' onClick={() => saveClick()}>Lưu</div>
             </div>
         )
     }
