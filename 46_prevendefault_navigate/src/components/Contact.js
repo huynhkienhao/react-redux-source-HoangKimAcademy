@@ -1,14 +1,14 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
-import Data from './Data.json';
-import Related from './Related';
+import React from 'react';
+import { useNavigate } from "react-router-dom";
 
-function Details() {
+function Contact() {
 
-    const { slugAndId } = useParams();
+    const navigate = useNavigate();
 
-    const [id] = slugAndId.split('.');
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        navigate('/');
+    }
 
     return (
         <>
@@ -19,7 +19,7 @@ function Details() {
                         <div className="col-lg-6">
                             {/* Mashead text and app badges*/}
                             <div className="mb-5 mb-lg-0 text-center text-lg-start">
-                                <h1 className="display-1 lh-1 mb-3">Trang tin tức chi tiết.</h1>
+                                <h1 className="display-1 lh-1 mb-3">Trang liên hệ.</h1>
                                 <div className="d-flex flex-column flex-lg-row align-items-center">
                                     <a className="me-lg-3 mb-4 mb-lg-0" href="#!">
                                         <img
@@ -114,45 +114,103 @@ function Details() {
                     </div>
                 </div>
             </header>
-            {/* Quote/testimonial aside*/}
-            <aside className="text-center bg-gradient-primary-to-secondary">
-                <div className="container px-5">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-10 offset-md-1 p-5">
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                            {/* Name input*/}
+                            <div className="form-floating mb-3">
+                                <input
+                                    className="form-control"
+                                    id="name"
+                                    type="text"
+                                    placeholder="Enter your name..."
+                                    data-sb-validations="required"
+                                />
+                                <label htmlFor="name">Full name</label>
+                                <div className="invalid-feedback" data-sb-feedback="name:required">
+                                    A name is required.
+                                </div>
+                            </div>
+                            {/* Email address input*/}
+                            <div className="form-floating mb-3">
+                                <input
+                                    className="form-control"
+                                    id="email"
+                                    type="email"
+                                    placeholder="name@example.com"
+                                    data-sb-validations="required,email"
+                                />
+                                <label htmlFor="email">Email address</label>
+                                <div className="invalid-feedback" data-sb-feedback="email:required">
+                                    An email is required.
+                                </div>
+                                <div className="invalid-feedback" data-sb-feedback="email:email">
+                                    Email is not valid.
+                                </div>
+                            </div>
+                            {/* Phone number input*/}
+                            <div className="form-floating mb-3">
+                                <input
+                                    className="form-control"
+                                    id="phone"
+                                    type="tel"
+                                    placeholder="(123) 456-7890"
+                                    data-sb-validations="required"
+                                />
+                                <label htmlFor="phone">Phone number</label>
+                                <div className="invalid-feedback" data-sb-feedback="phone:required">
+                                    A phone number is required.
+                                </div>
+                            </div>
+                            {/* Message input*/}
+                            <div className="form-floating mb-3">
+                                <textarea
+                                    className="form-control"
+                                    id="message"
+                                    type="text"
+                                    placeholder="Enter your message here..."
+                                    style={{ height: "10rem" }}
+                                    data-sb-validations="required"
+                                    defaultValue={""}
+                                />
+                                <label htmlFor="message">Message</label>
+                                <div
+                                    className="invalid-feedback"
+                                    data-sb-feedback="message:required"
+                                >
+                                    A message is required.
+                                </div>
+                            </div>
 
-                    <div className="row gx-5 justify-content-center">
-                        <div className="col-xl-8">
-                            {
-                                Data.filter((data) => data.id.toString() === id).map((data) => (
-                                    <div className="mt-4 rounded text-light" key={data.id}>
-                                        <img src={data.image} alt={data.title} />
-                                        <h5 className="card-title">{data.title}</h5>
-                                        <p className="mt-3">{data.description}</p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            {/* App features section*/}
-            <div className="text-start pb-3">
-                <div className="container px-5">
-                    <div className="row gx-5 justify-content-start">
-                        <h3 className="py-4">Tin liên quan</h3>
-                        {
-                            Data.filter((data) => data.id.toString() !== id).map((data) => {
-                                return (
-                                    <Related 
-                                        key={data.id}
-                                        id={data.id}
-                                        image={data.image}
-                                        title={data.title}
-                                        description={data.description}
-                                    />
-                                )
-                            })
-                        }
+                            <div className="d-none" id="submitSuccessMessage">
+                                <div className="text-center mb-3">
+                                    <div className="fw-bolder">Form submission successful!</div>
+                                    To activate this form, sign up at
+                                    <br />
+                                    <a href="https://startbootstrap.com/solution/contact-forms">
+                                        https://startbootstrap.com/solution/contact-forms
+                                    </a>
+                                </div>
+                            </div>
 
-                        
+                            <div className="d-none" id="submitErrorMessage">
+                                <div className="text-center text-danger mb-3">
+                                    Error sending message!
+                                </div>
+                            </div>
+
+                            <div className="d-grid">
+                                <button
+                                    className="btn btn-primary rounded-pill btn-lg"
+                                    id="submitButton"
+                                    type="submit"
+                                    onClick={(event) => handleSubmit(event)}
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -160,4 +218,4 @@ function Details() {
     )
 }
 
-export default Details
+export default Contact

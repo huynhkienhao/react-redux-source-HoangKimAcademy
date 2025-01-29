@@ -1,25 +1,17 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import Item from './Item';
 import Data from './Data.json';
-import Related from './Related';
 
-function Details() {
-
-    const { slugAndId } = useParams();
-
-    const [id] = slugAndId.split('.');
-
-
+function News() {
     return (
         <>
-            {/* Mashead header*/}
             <header className="masthead">
                 <div className="container px-5">
                     <div className="row gx-5 align-items-center">
                         <div className="col-lg-6">
                             {/* Mashead text and app badges*/}
                             <div className="mb-5 mb-lg-0 text-center text-lg-start">
-                                <h1 className="display-1 lh-1 mb-3">Trang tin tức chi tiết.</h1>
+                                <h1 className="display-1 lh-1 mb-3">Trang danh sách tin tức.</h1>
                                 <div className="d-flex flex-column flex-lg-row align-items-center">
                                     <a className="me-lg-3 mb-4 mb-lg-0" href="#!">
                                         <img
@@ -114,34 +106,14 @@ function Details() {
                     </div>
                 </div>
             </header>
-            {/* Quote/testimonial aside*/}
+
             <aside className="text-center bg-gradient-primary-to-secondary">
                 <div className="container px-5">
-
                     <div className="row gx-5 justify-content-center">
-                        <div className="col-xl-8">
-                            {
-                                Data.filter((data) => data.id.toString() === id).map((data) => (
-                                    <div className="mt-4 rounded text-light" key={data.id}>
-                                        <img src={data.image} alt={data.title} />
-                                        <h5 className="card-title">{data.title}</h5>
-                                        <p className="mt-3">{data.description}</p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            {/* App features section*/}
-            <div className="text-start pb-3">
-                <div className="container px-5">
-                    <div className="row gx-5 justify-content-start">
-                        <h3 className="py-4">Tin liên quan</h3>
                         {
-                            Data.filter((data) => data.id.toString() !== id).map((data) => {
+                            Data.map((data) => {
                                 return (
-                                    <Related 
+                                    <Item
                                         key={data.id}
                                         id={data.id}
                                         image={data.image}
@@ -151,13 +123,11 @@ function Details() {
                                 )
                             })
                         }
-
-                        
                     </div>
                 </div>
-            </div>
+            </aside>
         </>
     )
 }
 
-export default Details
+export default News

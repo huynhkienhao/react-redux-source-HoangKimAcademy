@@ -7,7 +7,9 @@ function Details() {
 
     const { slugAndId } = useParams();
 
-    const [id] = slugAndId.split('.');
+    const [slug, id] = slugAndId.split('.');
+
+    console.log('Slug:', slug);
 
 
     return (
